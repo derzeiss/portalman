@@ -4,11 +4,13 @@ import { ClientEntity } from './ClientEntity';
 import { InputController } from './InputController';
 import { ClientMap } from './ClientMap';
 import { ClientPlayer } from './ClientPlayer';
+import { FpsCounter } from './FpsCounter';
 
 export class ClientGame {
   client: ClientApplication;
   canvas: HTMLCanvasElement;
   cx: CanvasRenderingContext2D;
+  fps: FpsCounter;
 
   input: InputController;
 
@@ -20,6 +22,7 @@ export class ClientGame {
     const { canvas, cx } = this._initCanvas(rootSelector);
     this.canvas = canvas;
     this.cx = cx;
+    this.fps = new FpsCounter();
 
     this.input = new InputController(this.client);
     this.map = new ClientMap(this.client.socket);
@@ -46,6 +49,7 @@ export class ClientGame {
   }
 
   _handleTick(data: TickPayload) {
+    this.fps.nextFrame();
     let i = data.updatedEntities.length;
     while (i--) {
       const updatedEntity = data.updatedEntities[i];
