@@ -1,5 +1,5 @@
-import { PlayerDto } from '../dtos/PlayerDto';
+import { EntityDto } from '../dtos/EntityDto';
 
 export interface TickPayload {
-  updatedEntities: PlayerDto[];
+  updatedEntities: EntityDto[];
 }
