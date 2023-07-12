@@ -17,17 +17,24 @@ export const C_BLOCK = '#ecc';
 export const C_PLAYER = '#d0d';
 
 // keyboard settings
-export const KEYS_P1: PlayerControls = {
+export const PLAYER_DEFAULT_CONTROLS: PlayerControls = {
   up: 'ArrowUp',
   down: 'ArrowDown',
   left: 'ArrowLeft',
   right: 'ArrowRight',
+  bomb: ' ',
 };
 
 // socket.io events
 export const EV_CONNECTION = 'connection';
-export const EV_PLAYER_READY = 'player-ready';
+export const EV_DISCONNECT = 'disconnect';
+export const EV_CLIENT_CONNECTED = 'client-connected';
+export const EV_GAME_START = 'game-start';
 export const EV_INPUT_UPDATE = 'input-update';
+export const EV_MAP_UPDATE = 'map-update';
 export const EV_TICK = 'tick';
 
 export const TICK_FPS = 60;
+
+export const SERVER_PORT = 3000;
+export const SERVER_URL = `http://localhost:${SERVER_PORT}`;

@@ -1,5 +1,4 @@
-import { EntityDto } from './dtos/EntityDto';
-
-export interface Serializable {
-  serialize: () => EntityDto;
+export interface Serializable<T> {
+  serialize: () => T | T[];
+  deserialize: (data: T) => void;
 }

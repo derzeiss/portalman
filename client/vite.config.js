@@ -1,12 +1,11 @@
 /** @type {import('vite').UserConfig} */
 export default {
-  
   optimizeDeps: {
-    include: ['linked-dep'],
+    include: ['portalman_shared'],
   },
   build: {
     commonjsOptions: {
-      include: [/linked-dep/, /node_modules/],
+      include: [/portalman_shared/, /node_modules/],
     },
   },
 };

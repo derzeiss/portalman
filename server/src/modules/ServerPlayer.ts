@@ -1,45 +1,51 @@
-import { InputState, PLAYER_V, PlayerControls, PlayerDto } from 'portalman_shared';
+import {
+  EV_INPUT_UPDATE,
+  EntityType,
+  InputState,
+  InputUpdatePayload,
+  PLAYER_V,
+  PlayerControls,
+} from 'portalman_shared';
 import { ServerEntity } from './ServerEntity';
-import { GameServer } from './GameServer';
-import { EntityType } from 'portalman_shared/dist/types/EntityType';
+import { Socket } from 'socket.io';
 
 export class ServerPlayer extends ServerEntity {
-  game: GameServer;
+  static type = EntityType.PLAYER;
+
+  socket: Socket;
   controls: PlayerControls;
   inputs: InputState;
   vx = 0;
   vy = 0;
 
-  constructor(game: GameServer, controls: PlayerControls, x: number, y: number) {
+  constructor(socket: Socket, controls: PlayerControls, x: number, y: number) {
     super(x, y);
-    this.game = game;
+    this.socket = socket;
     this.controls = controls;
-    this.inputs = {};
+    this.inputs = { x: 0, y: 0, bomb: false };
+
+    this._initHandler();
+  }
+
+  _initHandler() {
+    this.socket.on(EV_INPUT_UPDATE, this._handleInputUpdate.bind(this));
+  }
+
+  _handleInputUpdate(data: InputUpdatePayload) {
+    this.inputs = data.inputs;
   }
 
   update() {
-    if (this.inputs[this.controls.left]) this.vx = -PLAYER_V;
-    else if (this.inputs[this.controls.right]) this.vx = PLAYER_V;
-    else this.vx = 0;
+    // update velocity
+    this.vx = this.inputs.x * PLAYER_V;
+    this.vy = this.inputs.y * PLAYER_V;
 
-    if (this.inputs[this.controls.up]) this.vy = -PLAYER_V;
-    else if (this.inputs[this.controls.down]) this.vy = PLAYER_V;
-    else this.vy = 0;
+    if (!this.vx && !this.vy) return false;
 
+    // update position
     this.x += this.vx;
     this.y += this.vy;
 
-    return !!(this.vx || this.vy);
-  }
-
-  serialize(): PlayerDto {
-    return {
-      type: EntityType.PLAYER,
-      id: this.id,
-      x: this.x,
-      y: this.y,
-      vx: this.vx,
-      vy: this.vy,
-    };
+    return true;
   }
 }

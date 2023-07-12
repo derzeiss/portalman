@@ -1,9 +1,12 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express';
 import http from 'http';
 import path from 'path';
+import { SERVER_PORT } from 'portalman_shared';
 import { Server } from 'socket.io';
-import { PORT } from './config';
-import { GameServer } from './modules/GameServer';
+import { ServerApplication } from './modules/ServerApplication';
 
 const app = express();
 app.use(express.static(path.join(__dirname, '../../client/dist')));
@@ -13,8 +16,9 @@ const io = new Server(server, {
     origin: ['http://localhost:5173', 'http://localhost:4173'],
   },
 });
-new GameServer(io).start();
 
-server.listen(PORT, () => {
-  console.log(`Listening on *:${PORT}`);
+new ServerApplication(io);
+
+server.listen(SERVER_PORT, () => {
+  console.log(`Listening on *:${SERVER_PORT}`);
 });

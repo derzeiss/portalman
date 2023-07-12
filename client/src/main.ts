@@ -1,17 +1,30 @@
-import { PlayerReadyPayload, TickPayload } from 'portalman_shared';
-import { io } from 'socket.io-client';
-import { InputController } from './modules/InputController';
+import {
+  EV_CLIENT_CONNECTED,
+  EV_CONNECTION,
+  EV_DISCONNECT,
+  EV_GAME_START,
+  EV_INPUT_UPDATE,
+  EV_MAP_UPDATE,
+  EV_TICK,
+} from 'portalman_shared';
+import { ClientApplication } from './modules/ClientApplication';
 import './style.css';
 
-// const g = new Game('#root');
-// g.start();
+console.log(
+  'EV_CONNECTION',
+  EV_CONNECTION,
+  '| EV_DISCONNECT',
+  EV_DISCONNECT,
+  '| EV_CLIENT_CONNECTED',
+  EV_CLIENT_CONNECTED,
+  '| EV_GAME_START',
+  EV_GAME_START,
+  '| EV_INPUT_UPDATE',
+  EV_INPUT_UPDATE,
+  '| EV_MAP_UPDATE',
+  EV_MAP_UPDATE,
+  '| EV_TICK',
+  EV_TICK,
+);
 
-let id: number;
-const socket = io(`http://localhost:3000`);
-socket.on('player-ready', (data: PlayerReadyPayload) => {
-  id = data.player.id;
-  new InputController(socket, id);
-});
-socket.on('tick', (data: TickPayload) => {
-  if (data.updatedEntities.length) console.log(data);
-});
+new ClientApplication();
