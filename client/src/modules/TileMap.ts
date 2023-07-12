@@ -1,5 +1,4 @@
-import { BLOCK_SIZE, N_BLOCKS } from '../config';
-import { TileType } from '../types/TileType';
+import { BLOCK_SIZE, N_BLOCKS, TileType } from 'portalman_shared';
 import { randint } from '../util/randint';
 import { Tile } from './Tile';
 

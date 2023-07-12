@@ -1,5 +1,4 @@
-import { BLOCK_SIZE, C_BLOCK, C_WALL_NO_PORTAL, C_WALL_PORTAL } from '../config';
-import { TileType } from '../types/TileType';
+import { BLOCK_SIZE, C_BLOCK, C_WALL_NO_PORTAL, C_WALL_PORTAL, TileType } from 'portalman_shared';
 import { BaseEntity } from './BaseEntity';
 
 export class Tile extends BaseEntity {

@@ -1,6 +1,5 @@
-import { BLOCK_SIZE, HEIGHT, KEYS_P1, WIDTH } from '../config';
+import { BLOCK_SIZE, HEIGHT, KEYS_P1, WIDTH } from 'portalman_shared';
 import { BaseEntity } from './BaseEntity';
-import { InputController } from './InputController';
 import { Player } from './Player';
 import { TileMap } from './TileMap';
 
@@ -8,7 +7,7 @@ export class Game {
   canvas: HTMLCanvasElement;
   cx: CanvasRenderingContext2D;
 
-  inputController: InputController;
+  // inputController: InputController;
   map: TileMap;
   entities: BaseEntity[] = [];
 
@@ -18,7 +17,7 @@ export class Game {
     this.cx = cx;
 
     this.map = new TileMap();
-    this.inputController = new InputController();
+    // this.inputController = new InputController();
   }
 
   _initCanvas(rootSelector: string) {
@@ -49,7 +48,7 @@ export class Game {
     // update
     let i = this.entities.length;
     while (i--) {
-      this.entities[i].update(this.inputController);
+      // this.entities[i].update(this.inputController);
     }
 
     // render

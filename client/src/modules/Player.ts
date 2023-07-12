@@ -1,5 +1,4 @@
-import { C_PLAYER, PLAYER_SIZE, PLAYER_V } from '../config';
-import { PlayerControls } from '../types/PlayerControls';
+import { C_PLAYER, PLAYER_SIZE, PLAYER_V, PlayerControls } from 'portalman_shared';
 import { BaseEntity } from './BaseEntity';
 import { InputController } from './InputController';
 

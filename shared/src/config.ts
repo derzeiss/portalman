@@ -23,3 +23,11 @@ export const KEYS_P1: PlayerControls = {
   left: 'ArrowLeft',
   right: 'ArrowRight',
 };
+
+// socket.io events
+export const EV_CONNECTION = 'connection';
+export const EV_PLAYER_READY = 'player-ready';
+export const EV_INPUT_UPDATE = 'input-update';
+export const EV_TICK = 'tick';
+
+export const TICK_FPS = 60;

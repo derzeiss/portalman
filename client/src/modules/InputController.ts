@@ -1,22 +1,29 @@
-export class InputController {
-  inputs: Record<string, boolean>;
+import { InputState, InputUpdatePayload } from 'portalman_shared';
+import { Socket } from 'socket.io-client';
 
-  constructor() {
+export class InputController {
+  id: number;
+  socket: Socket;
+  inputs: InputState;
+
+  constructor(socket: Socket, id: number) {
+    this.id = id;
+    this.socket = socket;
     this.inputs = {};
 
     this._setupListeners();
   }
 
   _setupListeners() {
-    document.addEventListener('keydown', this._handleKeyDown.bind(this));
-    document.addEventListener('keyup', this._handleKeyUp.bind(this));
+    document.addEventListener('keydown', (ev) => this._handleKeyChange(ev.key, true));
+    document.addEventListener('keyup', (ev) => this._handleKeyChange(ev.key, false));
   }
 
-  _handleKeyDown(ev: KeyboardEvent) {
-    this.inputs[ev.key] = true;
-  }
+  _handleKeyChange(key: string, state: boolean) {
+    if (this.inputs[key] === state) return;
+    this.inputs[key] = state;
 
-  _handleKeyUp(ev: KeyboardEvent) {
-    this.inputs[ev.key] = false;
+    const payload: InputUpdatePayload = { id: this.id, inputs: this.inputs };
+    this.socket.emit('input-update', payload);
   }
 }
